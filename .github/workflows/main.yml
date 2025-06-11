@@ -2,8 +2,7 @@ name: Layan Automation
 
 on:
   schedule:
-    - cron: '0 2 * * *'   # 5 صباحًا بتوقيت القدس
-    - cron: '0 14 * * *'  # 5 مساءً بتوقيت القدس
+    - cron: '*/3 * * * *'  # كل 3 دقائق
   workflow_dispatch:
 
 jobs:
