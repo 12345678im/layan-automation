@@ -21,13 +21,14 @@ fs.writeFileSync('result.txt', `📄 سجل تنفيذ السكربت - ${new Da
       await page.fill('input[placeholder="رقم الهاتف"]', phone);
       await page.click('button:has-text("تحديث")');
 
-      const card = await Promise.race([
-        page.waitForSelector('.card', { timeout: 60000 }),
+      // ننتظر ظهور إشعار Toastr لمدة دقيقة
+      const notification = await Promise.race([
+        page.waitForSelector('#toast-container .toast .toast-message', { timeout: 60000 }),
         new Promise(resolve => setTimeout(() => resolve(null), 60000))
       ]);
 
-      if (card) {
-        const content = await card.innerText();
+      if (notification) {
+        const content = await notification.innerText();
         statusMsg = `✅ [${startTime}] رقم ${phone} - النتيجة: ${content.trim()}`;
       } else {
         statusMsg = `⚠️ [${startTime}] رقم ${phone} - لم تظهر نتيجة خلال دقيقة`;
